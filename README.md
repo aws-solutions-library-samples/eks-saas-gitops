@@ -12,7 +12,8 @@
    - [Supported AWS Regions](#supported-aws-regions)
    - [Service Quotas](#service-quotas)
 3. [Deployment Steps](#deployment-steps)
-4. [License](#license)
+4. [Cleanup](#cleanup)
+5. [License](#license)
 
 ## Overview
 
@@ -224,10 +225,10 @@ This guidance implements several security best practices and AWS services to enh
 ### Network Security
 
 - **VPC Configuration**: The solution deploys resources into a Virtual Private Cloud with 3 Availability Zones (AZs) for secured network isolation
--  
+  
 - **Security Groups**: Security groups are configured to restrict traffic between components based on the principle of least privilege.
 
-- **Network Policies**: Kubernetes network policies are implemented to control pod-to-pod communication within the cluster.
+- **Network Policies**: Kubernetes Network policies are implemented to control pod-to-pod communication within the cluster.
 
 ### Data Protection
 
@@ -257,7 +258,7 @@ Before deploying this guidance, please ensure you have met the following prerequ
 
 1. **AWS Account and Permissions**: Ensure you have an active AWS account with appropriate permissions to create and manage AWS resources like Amazon EKS, EC2, IAM, and VPC.
 
-Note: All required tools (AWS CLI, Terraform, Git, kubectl, Helm, and Flux CLI) are pre-installed in the VSCode server instance that will be deployed as part of the setup process.
+>Note: All required tools (AWS CLI, Terraform, Git, kubectl, Helm, and Flux CLI) are pre-installed in the VSCode server instance that will be deployed as part of the setup process.
 
 ## Deployment Steps
 
@@ -269,25 +270,25 @@ Follow these steps to deploy the EKS SaaS GitOps guidance:
    - Choose "Upload a template file" and upload the `helpers/vs-code-ec2.yaml` file from this repository
    - Click "Next" and provide a stack name (e.g., "eks-saas-gitops-vscode")
    - Configure any required parameters and click "Next"
-   - **Note**: The default allowed IPs is set to 0.0.0.0/0 (all IP addresses). For production deployments, consider restricting this to specific IP ranges for enhanced security.
+   - **Note**: The default allowed IPs is set to `0.0.0.0/0` (all IP addresses). For production deployments, consider restricting this to specific IP ranges for enhanced security.
    - Review the configuration and click "Create stack"
    - Wait for the CloudFormation stack to complete deployment (approximately 30 minutes)
    - The Terraform infrastructure is deployed automatically as part of the VSCode server instance setup
    - The VSCode instance has all required tools pre-installed (AWS CLI, Terraform, Git, kubectl, Helm, and Flux CLI)
 
 2. **Access the VSCode Server Instance**:
-   - Once the CloudFormation stack deployment is complete, go to the "Outputs" tab
+   - Once the CloudFormation stack deployment is complete, go to the `Outputs` tab
    - Find the `VsCodePassword` and click on the link, copy the password under `Value`
    - Find the `VSCodeURL` output value and click on the link
    - This will open the VSCode web interface in your browser
    - Input the password copied from `VsCodePassword`
-   - The initial guidance repository (this repository) will be available at `/home/ec2-user/eks-saas-gitops`
+   - The initial guidance code repository (this repository) will be available in the `/home/ec2-user/eks-saas-gitops` directory
    - The repository connected to Flux and your Amazon EKS Cluster will be automatically cloned and available in the VSCode workspace at `/home/ec2-user/environment/gitops-gitea-repo`
-   - If you want to understand the infrastructure components or make customizations, you can review the terraform directory:
+   - If you want to understand the infrastructure components or make customizations, you can review the Terraform modules directory:
      ```
      cd /home/ec2-user/eks-saas-gitops/terraform
      ```
-   - The `/home/ec2-user/eks-saas-gitops` is the initial guidance repo used to create the entire Stack, while `/home/ec2-user/environment/gitops-gitea-repo` is the Gitea repo connected to Flux and the EKS Cluster.
+   - The `/home/ec2-user/eks-saas-gitops` is the initial guidance repository used to create the entire Stack, while `/home/ec2-user/environment/gitops-gitea-repo` is the Gitea repository connected to Flux and the EKS Cluster.
 
 4. **Explore the GitOps Implementation**:
    - After the infrastructure deployment is complete, you can explore the GitOps implementation and tenant onboarding process
@@ -295,11 +296,11 @@ Follow these steps to deploy the EKS SaaS GitOps guidance:
    - Use the workflow scripts to automate tenant onboarding and application deployment
 
 **TODO: update to live IG link when available and comment out the steps above**
-Please refer to detailed deployment instructions in the detailed guidance [Implementation Guide](https://implementationguides.kits.eventoutfitters.aws.dev/saas-eks-0307/compute/building-saas-applications-on-amazon-eks-using-gitops.html#deploy-the-guidance)
+Please refer to detailed deployment instructions in this [Implementation Guide](https://implementationguides.kits.eventoutfitters.aws.dev/saas-eks-0307/compute/building-saas-applications-on-amazon-eks-using-gitops.html#deploy-the-guidance) document.
 
-## Cleanup and Destruction
+## Cleanup
 
-When you're finished with the workshop/guidance use or need to clean up the resources to avoid ongoing costs, you can use the provided destruction script.
+When you're finished with the workshop/guidance use or need to clean up the resources to avoid ongoing costs, you can use the provided cleanup script.
 
 ### Running the Destroy Script
 
@@ -326,9 +327,9 @@ The destroy script will:
 - Remove all other infrastructure components created during deployment
 
 **TODO: update to live IG link when available comment out the steps above**
-Please refer to detailed guidance cleanup instructions in the detailed guidance [Implementation Guide](https://implementationguides.kits.eventoutfitters.aws.dev/saas-eks-0307/compute/building-saas-applications-on-amazon-eks-using-gitops.html#uninstall-the-guidance)
+Please refer to detailed guidance cleanup instructions in the [Implementation Guide](https://implementationguides.kits.eventoutfitters.aws.dev/saas-eks-0307/compute/building-saas-applications-on-amazon-eks-using-gitops.html#uninstall-the-guidance) document.
 
-**Important:** The destruction process may take 15-20 minutes to complete. Ensure you have the necessary AWS permissions to delete all the resources that were created during the initial deployment.
+**Important:** The cleanup process may take 15-20 minutes to complete. Ensure you have the necessary AWS permissions to delete all the resources that were created during the initial deployment.
 
 ## License
 
