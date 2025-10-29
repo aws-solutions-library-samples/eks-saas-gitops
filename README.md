@@ -135,7 +135,7 @@ This repository is organized to facilitate a hands-on deploymemt and learning ex
 You are responsible for the cost of the AWS services used while running this guidance. 
 As of September 2025, the cost for running this guidance with the default settings in the US East (N. Virginia) Region `us-east-1` is approximately **$329.25/month**.
 
-We recommend creating a [budget](https://alpha-docs-aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-create.html) through [AWS Cost Explorer](http://aws.amazon.com/aws-cost-management/aws-cost-explorer/) to help manage costs. Prices are subject to change. For full details, refer to the pricing webpage for each AWS service used in this guidance.
+We recommend creating an [AWS budget](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html) through [AWS Cost Explorer](http://aws.amazon.com/aws-cost-management/aws-cost-explorer/) to help manage costs. Prices are subject to change. For full details, refer to the pricing webpage for each AWS service used in this guidance.
 
 ### Sample cost table
 
@@ -294,8 +294,8 @@ Follow these steps to deploy the EKS SaaS GitOps guidance:
    - The sample microservices and Helm charts are available in their respective directories
    - Use the workflow scripts to automate tenant onboarding and application deployment
 
-**TODO: update to live IG link when available and comment out the steps above**
-Please refer to detailed deployment instructions in the detailed guidance [Implementation Guide](https://implementationguides.kits.eventoutfitters.aws.dev/saas-eks-0307/compute/building-saas-applications-on-amazon-eks-using-gitops.html#deploy-the-guidance)
+**TODO: update to live IG link**
+Please refer to detailed deployment instructions in the detailed guidance [Implementation Guide]()
 
 ## Cleanup and Destruction
 
@@ -325,8 +325,8 @@ The destroy script will:
 - Clean up IAM roles and policies
 - Remove all other infrastructure components created during deployment
 
-**TODO: update to live IG link when available comment out the steps above**
-Please refer to detailed guidance cleanup instructions in the detailed guidance [Implementation Guide](https://implementationguides.kits.eventoutfitters.aws.dev/saas-eks-0307/compute/building-saas-applications-on-amazon-eks-using-gitops.html#uninstall-the-guidance)
+**TODO: update to live IG**
+Please refer to detailed guidance cleanup instructions in the detailed guidance [Implementation Guide]
 
 **Important:** The destruction process may take 15-20 minutes to complete. Ensure you have the necessary AWS permissions to delete all the resources that were created during the initial deployment.
 
