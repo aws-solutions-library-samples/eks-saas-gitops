@@ -16,15 +16,31 @@ Parameters:
       - t3.large
       - t3.xlarge
     ConstraintDescription: Must be a valid EC2 instance type
+  LatestAmiId:
+    Type: "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>"
+    Default: "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
   AllowedIP:
     Description: Allowed IP address for connecting to the VSCode server and Gitea (CIDR)
     AllowedPattern: ^([0-9]{1,3}\.){3}[0-9]{1,3}/([0-9]|[1-2][0-9]|3[0-2])$
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x
     Type: String
     Default: 0.0.0.0/0
-  LatestAmiId:
-    Type: "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>"
-    Default: "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
+WorldAccessAcknowledgment:
+    Description: Type 'I AGREE' to acknowledge you're allowing world access (only required if SSHLocation is 0.0.0.0/0)
+    Type: String
+    Default: 'Enter String'
+Rules:
+  ValidateWorldAccessAcknowledgment:
+    RuleCondition: !Equals [!Ref AllowedIP, '0.0.0.0/0']
+    Assertions:
+      - Assert: 
+          Fn::Equals:
+            - !Ref WorldAccessAcknowledgment
+            - 'I AGREE'
+        AssertDescription: You must type 'I AGREE' in the WorldAccessAcknowledgment parameter when allowing world access (0.0.0.0/0)
+
+
+
 
 Resources:
   ################## PERMISSIONS AND ROLES #################
