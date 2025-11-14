@@ -25,10 +25,11 @@ Parameters:
     ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x
     Type: String
     Default: 0.0.0.0/0
-WorldAccessAcknowledgment:
+  WorldAccessAcknowledgment:
     Description: Type 'I AGREE' to acknowledge you're allowing world access (only required if SSHLocation is 0.0.0.0/0)
     Type: String
     Default: 'Enter String'
+
 Rules:
   ValidateWorldAccessAcknowledgment:
     RuleCondition: !Equals [!Ref AllowedIP, '0.0.0.0/0']
@@ -38,9 +39,6 @@ Rules:
             - !Ref WorldAccessAcknowledgment
             - 'I AGREE'
         AssertDescription: You must type 'I AGREE' in the WorldAccessAcknowledgment parameter when allowing world access (0.0.0.0/0)
-
-
-
 
 Resources:
   ################## PERMISSIONS AND ROLES #################
@@ -63,8 +61,6 @@ Resources:
                 - codebuild.amazonaws.com
             Action:
               - sts:AssumeRole
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AdministratorAccess
       Path: "/"
 
   ################## ARTIFACTS BUCKET ###############
@@ -290,6 +286,134 @@ Resources:
           Value: eks-saas-gitops-vscode-sg
         - Key: Environment
           Value: !Sub ${EnvironmentName}
+
+  SaaSEKSGitOpsWorkshopPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: SaaSEKSGitOpsWorkshopPolicy
+      Description: 'Consolidated IAM policy for SaaS on EKS GitOps Workshop'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: EKSFullAccess
+            Effect: Allow
+            Action:
+              - 'eks:*'
+            Resource: '*'
+          - Sid: EC2AndNetworkingFullAccess
+            Effect: Allow
+            Action:
+              - 'ec2:*'
+              - 'elasticloadbalancing:*'
+              - 'autoscaling:*'
+            Resource: '*'
+          - Sid: ContainerServicesFullAccess
+            Effect: Allow
+            Action:
+              - 'ecr:*'
+            Resource: '*'
+          - Sid: IAMManagement
+            Effect: Allow
+            Action:
+              - 'iam:CreateRole'
+              - 'iam:DeleteRole'
+              - 'iam:GetRole'
+              - 'iam:ListRoles'
+              - 'iam:PassRole'
+              - 'iam:AttachRolePolicy'
+              - 'iam:DetachRolePolicy'
+              - 'iam:CreatePolicy'
+              - 'iam:DeletePolicy'
+              - 'iam:GetPolicy'
+              - 'iam:ListPolicies'
+              - 'iam:CreateServiceLinkedRole'
+              - 'iam:TagRole'
+              - 'iam:UntagRole'
+              - 'iam:GetRolePolicy'
+              - 'iam:PutRolePolicy'
+              - 'iam:DeleteRolePolicy'
+              - 'iam:ListAttachedRolePolicies'
+              - 'iam:ListRolePolicies'
+              - 'iam:ListEntitiesForPolicy'
+              - 'iam:CreateInstanceProfile'
+              - 'iam:GetPolicyVersion'
+              - 'iam:GetInstanceProfile'
+              - 'iam:CreateOpenIDConnectProvider'
+              - 'iam:TagPolicy'
+              - 'iam:TagOpenIDConnectProvider'
+              - 'iam:GetOpenIDConnectProvider'
+              - 'iam:DeleteOpenIDConnectProvider'
+              - 'iam:AddRoleToInstanceProfile'
+              - 'iam:DeleteInstanceProfile'
+            Resource: '*'
+          - Sid: ApplicationServicesFullAccess
+            Effect: Allow
+            Action:
+              - 'sqs:*'
+              - 'dynamodb:*'
+              - 's3:*'
+            Resource: '*'
+          - Sid: SystemsManagerAccess
+            Effect: Allow
+            Action:
+              - 'ssm:GetParameter'
+              - 'ssm:GetParameters'
+              - 'ssm:PutParameter'
+              - 'ssm:DeleteParameter'
+              - 'ssm:DescribeParameters'
+              - 'ssm:SendCommand'
+              - 'ssm:ListCommands'
+              - 'ssm:ListCommandInvocations'
+              - 'ssm:DescribeInstanceInformation'
+              - 'ssm:GetCommandInvocation'
+              - 'ssm:UpdateInstanceInformation'
+              - 'ssm:CreateDocument'
+              - 'ssm:DescribeDocumentParameters'
+              - 'ssm:GetDocument'
+              - 'ssm:ListDocuments'
+              - 'ssm:CreateAssociation'
+              - 'ssm:DescribeAssociation'
+              - 'ssm:ListAssociations'
+              - 'ssm:UpdateAssociation'
+              - 'ssm:DeleteAssociation'
+              - 'ssm:DescribeAssociationExecutions'
+              - 'ssm:DescribeAssociationExecutionTargets'
+              - 'ssm:StartAssociationsOnce'
+              - 'ssm:ListTagsForResource'
+              - 'ssmmessages:*'
+            Resource: '*'
+          - Sid: CloudFormationFullAccess
+            Effect: Allow
+            Action:
+              - 'cloudformation:*'
+            Resource: '*'
+          - Sid: KMSAccess
+            Effect: Allow
+            Action:
+              - 'kms:Decrypt'
+              - 'kms:DescribeKey'
+              - 'kms:CreateKey'
+              - 'kms:CreateAlias'
+              - 'kms:Encrypt'
+              - 'kms:GenerateDataKey'
+              - 'kms:ReEncrypt*'
+              - 'kms:TagResource'
+              - 'kms:ListAliases'
+              - 'kms:DeleteAlias'
+            Resource: '*'
+          - Sid: LogsAccess
+            Effect: Allow
+            Action:
+              - 'logs:CreateLogGroup'
+              - 'logs:CreateLogStream'
+              - 'logs:PutLogEvents'
+              - 'logs:DescribeLogGroups'
+              - 'logs:DescribeLogStreams'
+              - 'logs:PutRetentionPolicy'
+              - 'logs:ListTagsForResource'
+            Resource: '*'
+      Roles: 
+        - !Ref EC2Role
 
 Outputs:
   VsCodeIdeUrl:
