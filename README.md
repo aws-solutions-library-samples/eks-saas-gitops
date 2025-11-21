@@ -224,7 +224,7 @@ This guidance implements several security best practices and AWS services to enh
 ### Network Security
 
 - **VPC Configuration**: The solution deploys resources into a Virtual Private Cloud with 3 Availability Zones (AZs) for secured network isolation
--  
+  
 - **Security Groups**: Security groups are configured to restrict traffic between components based on the principle of least privilege.
 
 - **Network Policies**: Kubernetes network policies are implemented to control pod-to-pod communication within the cluster.
@@ -261,6 +261,9 @@ Note: All required tools (AWS CLI, Terraform, Git, kubectl, Helm, and Flux CLI) 
 
 ## Deployment Steps
 
+Please refer for detailed Deployment, Running and Cleanup instructions to the dedicated [Implementation Guide](https://aws-solutions-library-samples.github.io/compute/building-saas-applications-on-amazon-eks-using-gitops.html)
+
+<!--
 Follow these steps to deploy the EKS SaaS GitOps guidance:
 
 1. **Deploy the VSCode Server Instance**:
@@ -294,9 +297,6 @@ Follow these steps to deploy the EKS SaaS GitOps guidance:
    - The sample microservices and Helm charts are available in their respective directories
    - Use the workflow scripts to automate tenant onboarding and application deployment
 
-**TODO: update to live IG link**
-Please refer to detailed deployment instructions in the detailed guidance [Implementation Guide]()
-
 ## Cleanup and Destruction
 
 When you're finished with the workshop/guidance use or need to clean up the resources to avoid ongoing costs, you can use the provided destruction script.
@@ -329,6 +329,7 @@ The destroy script will:
 Please refer to detailed guidance cleanup instructions in the detailed guidance [Implementation Guide]
 
 **Important:** The destruction process may take 15-20 minutes to complete. Ensure you have the necessary AWS permissions to delete all the resources that were created during the initial deployment.
+-->
 
 ## License
 
