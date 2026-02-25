@@ -43,7 +43,7 @@ resource "local_file" "flux_instance_manifest" {
         pullSecret = "flux-system"
       }
       distribution = {
-        version  = "2.x"
+        version  = "2.7.5"
         registry = "ghcr.io/fluxcd"
         artifact = "oci://ghcr.io/controlplaneio-fluxcd/flux-operator-manifests"
       }
